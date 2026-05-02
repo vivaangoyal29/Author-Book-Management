@@ -17,4 +17,14 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             order by b.id
             """)
     List<BookAuthorView> findAllBooksWithAuthorDetails();
+
+    @Query("""
+            select new com.bits.library.dto.BookAuthorView(
+                b.id, b.title, b.publishedYear, a.name, a.email
+            )
+            from Book b inner join b.author a
+            where a.id = :authorId
+            order by b.id
+            """)
+    List<BookAuthorView> findBooksWithAuthorDetailsByAuthorId(Long authorId);
 }

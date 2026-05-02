@@ -23,6 +23,13 @@ public class BookService {
         return bookRepository.findAllBooksWithAuthorDetails();
     }
 
+    public List<BookAuthorView> findBookAuthorRowsByAuthorId(Long authorId) {
+        if (authorId == null) {
+            return findAllBookAuthorRows();
+        }
+        return bookRepository.findBooksWithAuthorDetailsByAuthorId(authorId);
+    }
+
     public Book saveBook(Book book, Long authorId) {
         Author author = authorService.findById(authorId);
         book.setAuthor(author);

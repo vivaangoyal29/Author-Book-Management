@@ -50,9 +50,10 @@ public class LibraryController {
     }
 
     @GetMapping("/books")
-    public String listBooks(Model model) {
-        model.addAttribute("bookRows", bookService.findAllBookAuthorRows());
+    public String listBooks(@RequestParam(required = false) Long authorId, Model model) {
+        model.addAttribute("bookRows", bookService.findBookAuthorRowsByAuthorId(authorId));
         model.addAttribute("authors", authorService.findAllAuthors());
+        model.addAttribute("selectedAuthorId", authorId);
         model.addAttribute("book", new Book());
         return "book-list";
     }
